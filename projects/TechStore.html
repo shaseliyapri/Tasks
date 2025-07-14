@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Premium Electronics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #5a6fd8, #6a4190);
+        }
+
+        /* Fixed Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #667eea;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.05);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Main Container */
+        .main-container {
+            margin-top: 80px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        /* Product Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .product-card:hover .product-image::before {
+            left: 100%;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Product Table */
+        .product-table-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .product-table th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .product-table td {
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .product-table tr:hover td {
+            background-color: #f8f9fa;
+        }
+
+        .product-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.3rem;
+        }
+
+        /* Forms Section */
+        .forms-section {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .forms-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 500px;
+        }
+
+        .form-section {
+            padding: 3rem;
+            position: relative;
+        }
+
+        .login-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-right: 1px solid #eee;
+        }
+
+        .checkout-section {
+            background: white;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .radio-item input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .form-submit {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Cart Summary */
+        .cart-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+            position: sticky;
+            top: 100px;
+        }
+
+        .cart-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e74c3c;
+        }
+
+        .cart-total {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            margin: 1rem -2rem -2rem -2rem;
+            padding: 1.5rem 2rem;
+            text-align: center;
+        }
+
+        /* Scrollable Section */
+        .scrollable-reviews {
+            height: 400px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .review-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1rem;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .reviewer-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .review-rating {
+            color: #f39c12;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ecf0f1;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .forms-container {
+                grid-template-columns: 1fr;
+            }
+
+            .login-section {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .cart-summary {
+                position: static;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fixed Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">TechStore</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#account">Account</a></li>
+                <li><a href="#cart">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li>
+                    <a href="#cart" class="cart-icon">
+                        🛒 Cart
+
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Premium <span class="highlight">Electronics</span> Store</h1>
+                <p>Discover the latest technology and gadgets with unbeatable prices and quality</p>
+                <a href="#products" class="cta-button">Shop Now</a>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="section">
+            <h2 class="section-title">Featured Products</h2>
+
+            <!-- Product Grid -->
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">📱</div>
+                    <div class="product-info">
+                        <h3 class="product-name">Smartphone Pro Max</h3>
+                        <div class="product-price">$999.99</div>
+                        <p class="product-description">Latest flagship smartphone with advanced camera system and 5G
+                            connectivity.</p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Add to Cart</button>
+                            <a href="#" class="btn btn-secondary">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">💻</div>
+                    <div class="product-info">
+                        <h3 class="product-name">Laptop Ultra</h3>
+                        <div class="product-price">$1,299.99</div>
+                        <p class="product-description">High-performance laptop perfect for work and gaming with 16GB
+                            RAM.</p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Add to Cart</button>
+                            <a href="#" class="btn btn-secondary">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">🎧</div>
+                    <div class="product-info">
+                        <h3 class="product-name">Wireless Headphones</h3>
+                        <div class="product-price">$199.99</div>
+                        <p class="product-description">Premium noise-canceling headphones with 30-hour battery life.</p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Add to Cart</button>
+                            <a href="#" class="btn btn-secondary">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">⌚</div>
+                    <div class="product-info">
+                        <h3 class="product-name">Smart Watch</h3>
+                        <div class="product-price">$299.99</div>
+                        <p class="product-description">Advanced fitness tracking and health monitoring smartwatch.</p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Add to Cart</button>
+                            <a href="#" class="btn btn-secondary">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">📷</div>
+                    <div class="product-info">
+                        <h3 class="product-name">Digital Camera</h3>
+                        <div class="product-price">$799.99</div>
+                        <p class="product-description">Professional DSLR camera with 4K video recording capabilities.
+                        </p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Add to Cart</button>
+                            <a href="#" class="btn btn-secondary">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">🖥️</div>
+                    <div class="product-info">
+                        <h3 class="product-name">4K Monitor</h3>
+                        <div class="product-price">$449.99</div>
+                        <p class="product-description">Ultra-wide 4K monitor perfect for productivity and entertainment.
+                        </p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary">Add to Cart</button>
+                            <a href="#" class="btn btn-secondary">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Table -->
+            <div class="product-table-container">
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Smartphone Pro Max</strong></td>
+                            <td><span style="color: #e74c3c; font-weight: bold;">$999.99</span></td>
+                            <td>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input">
+                                    <button class="quantity-btn">+</button>
+                                </div>
+                            </td>
+                            <td><span style="color: #27ae60;">In Stock</span></td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Add to
+                                    Cart</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Laptop Ultra</strong></td>
+                            <td><span style="color: #e74c3c; font-weight: bold;">$1,299.99</span></td>
+                            <td>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input">
+                                    <button class="quantity-btn">+</button>
+                                </div>
+                            </td>
+                            <td><span style="color: #27ae60;">In Stock</span></td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Add to
+                                    Cart</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wireless Headphones</strong></td>
+                            <td><span style="color: #e74c3c; font-weight: bold;">$199.99</span></td>
+                            <td>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn">-</button>
+                                    <input type="number" value="2" min="1" class="quantity-input">
+                                    <button class="quantity-btn">+</button>
+                                </div>
+                            </td>
+                            <td><span style="color: #f39c12;">Low Stock</span></td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Add to
+                                    Cart</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Smart Watch</strong></td>
+                            <td><span style="color: #e74c3c; font-weight: bold;">$299.99</span></td>
+                            <td>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input">
+                                    <button class="quantity-btn">+</button>
+                                </div>
+                            </td>
+                            <td><span style="color: #27ae60;">In Stock</span></td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Add to
+                                    Cart</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Account & Checkout Forms Section -->
+        <section id="account" class="section">
+            <h2 class="section-title">Account & Checkout</h2>
+
+            <div class="forms-section">
+                <div class="forms-container">
+                    <!-- Login Form -->
+                    <div class="form-section login-section">
+                        <h3 class="form-title">Login to Your Account</h3>
+                        <form>
+                            <div class="form-group">
+                                <label for="login-email">Email Address</label>
+                                <input type="email" id="login-email" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="login-password">Password</label>
+                                <input type="password" id="login-password" name="password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Remember Me</label>
+                                <div class="radio-group">
+                                    <div class="radio-item">
+                                        <input type="radio" id="remember-yes" name="remember" value="yes">
+                                        <label for="remember-yes">Yes</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="remember-no" name="remember" value="no" checked>
+                                        <label for="remember-no">No</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="form-submit">Login</button>
+                        </form>
+                    </div>
+
+                    <!-- Checkout Form -->
+                    <div class="form-section checkout-section">
+                        <h3 class="form-title">Checkout Information</h3>
+                        <form>
+                            <div class="form-group">
+                                <label for="full-name">Full Name</label>
+                                <input type="text" id="full-name" name="fullName" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="checkout-email">Email Address</label>
+                                <input type="email" id="checkout-email" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">Shipping Address</label>
+                                <input type="text" id="address" name="address" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="payment-method">Payment Method</label>
+                                <select id="payment-method" name="paymentMethod" required>
+                                    <option value="">Select Payment Method</option>
+                                    <option value="credit-card">Credit Card</option>
+                                    <option value="debit-card">Debit Card</option>
+                                    <option value="paypal">PayPal</option>
+                                    <option value="apple-pay">Apple Pay</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Shipping Speed</label>
+                                <div class="radio-group">
+                                    <div class="radio-item">
+                                        <input type="radio" id="standard" name="shipping" value="standard" checked>
+                                        <label for="standard">Standard (5-7 days)</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="express" name="shipping" value="express">
+                                        <label for="express">Express (2-3 days)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="form-submit">Complete Purchase</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Summary (Sticky) -->
+        <section id="cart" class="section">
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+                <div>
+                    <h2 class="section-title">Customer Reviews</h2>
+
+                    <!-- Scrollable Reviews Section -->
+                    <div class="scrollable-reviews">
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="reviewer-name">John Smith</span>
+                                <span class="review-rating">⭐⭐⭐⭐⭐</span>
+                            </div>
+                            <p>"Amazing quality products and fast shipping! The smartphone I ordered exceeded my
+                                expectations."</p>
+                        </div>
+
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="reviewer-name">Sarah Johnson</span>
+                                <span class="review-rating">⭐⭐⭐⭐⭐</span>
+                            </div>
+                            <p>"Great customer service and the laptop works perfectly for my work needs. Highly
+                                recommended!"</p>
+                        </div>
+
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="reviewer-name">Mike Davis</span>
+                                <span class="review-rating">⭐⭐⭐⭐</span>
+                            </div>
+                            <p>"The headphones have excellent sound quality. Only minor issue was the delivery took a
+                                bit longer than expected."</p>
+                        </div>
+
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="reviewer-name">Emily Chen</span>
+                                <span class="review-rating">⭐⭐⭐⭐⭐</span>
+                            </div>
+                            <p>"Love my new smartwatch! The fitness tracking features are incredibly accurate and the
+                                battery life is amazing."</p>
+                        </div>
+
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="reviewer-name">David Wilson</span>
+                                <span class="review-rating">⭐⭐⭐⭐</span>
+                            </div>
+                            <p>"The camera quality is outstanding. Perfect for my photography hobby. Will definitely
+                                shop here again."</p>
+                        </div>
+
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="reviewer-name">Lisa Brown</span>
+                                <span class="review-rating">⭐⭐⭐⭐⭐</span>
+                            </div>
+                            <p>"Excellent shopping experience from start to finish. The 4K monitor is perfect for my
+                                home office setup."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Summary (Sticky Position) -->
+                <div class="cart-summary">
+                    <h3 class="cart-title">🛒 Cart Summary</h3>
+
+                    <div class="cart-item">
+                        <span>Smartphone Pro Max (1x)</span>
+                        <span>$999.99</span>
+                    </div>
+
+                    <div class="cart-item">
+                        <span>Wireless Headphones (2x)</span>
+                        <span>$399.98</span>
+                    </div>
+
+                    <div class="cart-item">
+                        <span>Smart Watch (1x)</span>
+                        <span>$299.99</span>
+                    </div>
+
+                    <div class="cart-item">
+                        <span>Subtotal</span>
+                        <span>$1,699.96</span>
+                    </div>
+
+                    <div class="cart-item">
+                        <span>Shipping</span>
+                        <span>$19.99</span>
+                    </div>
+
+                    <div class="cart-item">
+                        <span>Tax</span>
+                        <span>$137.59</span>
+                    </div>
+
+                    <div class="cart-item">
+                        <span><strong>Total</strong></span>
+                        <span><strong>$1,857.54</strong></span>
+                    </div>
+
+                    <div class="cart-total">
+                        <button class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Proceed to
+                            Checkout</button>
+                        <button class="btn btn-secondary" style="width: 100%;">Continue Shopping</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Investors</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Account</h3>
+                <ul>
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="#">Order History</a></li>
+                    <li><a href="#">Wishlist</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                    <li><a href="#">Gift Cards</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 TechStore. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+</body>
+
+</html>
